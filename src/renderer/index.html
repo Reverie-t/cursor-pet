@@ -1,0 +1,31 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8" />
+    <title>桌宠</title>
+    <link rel="stylesheet" href="pet.css" />
+  </head>
+  <body>
+    <div class="stage">
+      <div id="bubble" class="bubble" hidden></div>
+      <div id="menu" class="menu" hidden>
+        <div id="today" class="balance">今天还没干活</div>
+        <div id="balance" class="balance">右键查看余额</div>
+        <form id="talk">
+          <input id="talk-input" maxlength="80" placeholder="跟它说一句" />
+          <button type="submit">发送</button>
+        </form>
+        <button id="refresh-balance" type="button">刷新余额</button>
+        <button id="reset" type="button">回到右下角</button>
+        <button id="quit" type="button">退出</button>
+      </div>
+      <div id="sprite">
+        <img id="clip" alt="" draggable="false" />
+        <div class="decor decor-bubble" aria-hidden="true">?</div>
+        <div class="decor decor-sweat" aria-hidden="true"></div>
+        <div class="decor decor-spark" aria-hidden="true">★</div>
+      </div>
+    </div>
+    <script src="pet.js"></script>
+  </body>
+</html>

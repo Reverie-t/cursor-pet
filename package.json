@@ -1,0 +1,15 @@
+{
+  "name": "cursor-pet",
+  "version": "0.1.0",
+  "private": true,
+  "description": "跟着本机 Cursor Agent 会话换动作的透明桌宠",
+  "main": "src/main.js",
+  "scripts": {
+    "start": "electron .",
+    "test": "node --test src/state.test.js src/server.test.js src/desktop-bounds.test.js src/money.test.js src/today.test.js src/alert.test.js src/talk.test.js",
+    "install-hooks": "node scripts/install-hooks.js"
+  },
+  "dependencies": {
+    "electron": "35.7.5"
+  }
+}

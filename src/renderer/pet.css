@@ -1,0 +1,233 @@
+html,
+body {
+  margin: 0;
+  width: 100%;
+  height: 100%;
+  background: transparent;
+  overflow: hidden;
+  user-select: none;
+}
+
+.stage {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  align-items: center;
+  background: transparent;
+}
+
+.bubble {
+  margin-bottom: 6px;
+  padding: 6px 12px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.94);
+  color: #1d2430;
+  font: 14px "Segoe UI", "Microsoft YaHei", sans-serif;
+  box-shadow: 0 6px 18px rgba(20, 24, 33, 0.16);
+}
+
+#sprite {
+  position: relative;
+  width: 280px;
+  height: 158px;
+  cursor: grab;
+}
+
+#sprite.dragging {
+  cursor: grabbing;
+}
+
+#clip {
+  width: 280px;
+  height: 158px;
+  object-fit: contain;
+  background: transparent;
+  pointer-events: none;
+  user-select: none;
+  -webkit-user-drag: none;
+}
+
+/* === 头顶装饰（思考气泡 / 汗滴 / 庆祝星星） ===
+ * 平时隐藏，按 phase 显示。位置用 absolute 相对 #sprite。
+ * pointer-events: none 防止遮挡 sprite 的拖拽事件。 */
+.decor {
+  position: absolute;
+  pointer-events: none;
+  display: none;
+}
+
+.decor-bubble {
+  top: 2px;
+  right: 38px;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.95);
+  color: #1d2430;
+  font: bold 20px "Segoe UI", "Microsoft YaHei", sans-serif;
+  display: none;
+  place-items: center;
+  box-shadow: 0 4px 10px rgba(20, 24, 33, 0.18);
+}
+
+.decor-sweat {
+  top: 12px;
+  left: 36px;
+  width: 10px;
+  height: 14px;
+  border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
+  background: #6cc4ff;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.18);
+}
+
+.decor-spark {
+  top: 4px;
+  left: 28px;
+  color: #facc15;
+  font: 26px "Segoe UI", sans-serif;
+  line-height: 1;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.25);
+}
+
+/* === 各 phase 的关键帧动画 ===
+ * transform-origin 选 bottom/center 让缩放/旋转看起来更自然（脚不动）。 */
+#sprite.phase-idle #clip {
+  animation: grok-idle 3.2s ease-in-out infinite;
+  transform-origin: center bottom;
+}
+@keyframes grok-idle {
+  0%, 100% { transform: scale(1) translateY(0); }
+  50%      { transform: scale(1.03) translateY(-1px); }
+}
+
+#sprite.phase-thinking #clip {
+  animation: grok-think 2.4s ease-in-out infinite;
+  transform-origin: center bottom;
+}
+@keyframes grok-think {
+  0%, 100% { transform: rotate(-2.5deg) translateY(0); }
+  50%      { transform: rotate(2.5deg) translateY(-2px); }
+}
+#sprite.phase-thinking .decor-bubble {
+  display: grid;
+  animation: grok-bubble 1.6s ease-in-out infinite;
+}
+@keyframes grok-bubble {
+  0%, 100% { opacity: 0; transform: translateY(6px) scale(0.5); }
+  35%, 65% { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+#sprite.phase-working #clip {
+  animation: grok-work 0.45s ease-in-out infinite;
+}
+@keyframes grok-work {
+  0%, 100% { transform: translateY(0); }
+  30%      { transform: translateY(-1.5px); }
+  70%      { transform: translateY(1.5px); }
+}
+
+#sprite.phase-success #clip {
+  animation: grok-success 0.7s ease-in-out infinite;
+  transform-origin: center bottom;
+}
+@keyframes grok-success {
+  0%, 100% { transform: translateY(0) scale(1); }
+  50%      { transform: translateY(-10px) scale(1.06); }
+}
+#sprite.phase-success .decor-spark {
+  display: block;
+  animation: grok-spark 0.8s ease-in-out infinite;
+}
+@keyframes grok-spark {
+  0%, 100% { opacity: 0; transform: scale(0.4) rotate(0deg); }
+  50%      { opacity: 1; transform: scale(1.2) rotate(180deg); }
+}
+
+#sprite.phase-error #clip {
+  animation: grok-error 1.6s ease-in-out infinite;
+  transform-origin: center top;
+}
+@keyframes grok-error {
+  0%, 100% { transform: rotate(0deg) translateY(0); }
+  50%      { transform: rotate(-3deg) translateY(2px); }
+}
+#sprite.phase-error .decor-sweat {
+  display: block;
+  animation: grok-sweat 1.2s ease-in infinite;
+}
+@keyframes grok-sweat {
+  0%   { opacity: 0; transform: translateY(-4px); }
+  20%  { opacity: 1; transform: translateY(0); }
+  100% { opacity: 0; transform: translateY(46px); }
+}
+
+#sprite.phase-drag #clip,
+#sprite.dragging #clip {
+  animation: grok-drag 0.55s ease-in-out infinite;
+  transform-origin: center top;
+}
+@keyframes grok-drag {
+  0%, 100% { transform: rotate(-10deg) translateY(-8px); }
+  50%      { transform: rotate(10deg) translateY(-14px); }
+}
+
+.menu[hidden],
+.bubble[hidden] {
+  display: none !important;
+}
+
+.menu {
+  position: relative;
+  margin-bottom: 8px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding: 6px;
+  border-radius: 10px;
+  background: rgba(255, 255, 255, 0.96);
+  box-shadow: 0 8px 24px rgba(20, 24, 33, 0.18);
+}
+
+.menu button {
+  border: 0;
+  background: transparent;
+  color: #1d2430;
+  font: 13px "Segoe UI", "Microsoft YaHei", sans-serif;
+  text-align: left;
+  padding: 6px 8px;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.balance {
+  padding: 6px 8px 2px;
+  color: #1d2430;
+  font: 13px "Segoe UI", "Microsoft YaHei", sans-serif;
+  line-height: 1.45;
+  white-space: pre-line;
+}
+
+#talk {
+  display: flex;
+  gap: 4px;
+  padding: 4px;
+}
+
+#talk input {
+  width: 128px;
+  border: 0;
+  border-radius: 6px;
+  background: #eef3f8;
+  color: #1d2430;
+  font: 13px "Segoe UI", "Microsoft YaHei", sans-serif;
+  padding: 6px 8px;
+}
+
+#talk button {
+  padding: 6px 8px;
+}
+
+.menu button:hover {
+  background: #eef3f8;
+}
