@@ -1,10 +1,10 @@
 # cursor-pet
 
-跟着本机 Cursor Agent 换动作的透明桌宠。你发话它在思考，cursor改文件时在干活，做完或出错会更换姿势。
+跟着本机 Cursor Agent 换动作的透明桌宠。当你想cursor提出问题时它在思考，cursor改文件时在干活，做完或出错会变换姿势。
 
 目前只支持 **Windows**。需要已经装好 Node.js，并且本机登录着 Cursor。
 
-## 跑起来
+## 运行方式
 
 ```powershell
 git clone https://github.com/Reverie-t/cursor-pet.git
@@ -20,7 +20,7 @@ npm start
 
 ## 右键菜单
 
-- 今天 Agent 实际在想、在干活的时间，以及成功、失败次数
+- 今日 Agent 实际在想、在干活的时间，以及成功、失败次数
 - 上次记下的套餐余额。点「刷新余额」才会再问 Cursor
 - 跟它说一句。这句话在本机回答，不花套餐额度
 - 回到右下角
