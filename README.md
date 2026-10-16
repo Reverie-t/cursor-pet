@@ -7,7 +7,7 @@
 ## 跑起来
 
 ```powershell
-git clone <仓库地址>
+git clone https://github.com/Reverie-t/cursor-pet.git
 cd cursor-pet
 npm install
 npm run install-hooks
