@@ -257,6 +257,14 @@ if (reset) {
   });
 }
 
+const hide = document.querySelector('#hide');
+if (hide) {
+  hide.addEventListener('click', async () => {
+    await closeMenu();
+    window.pet.hide();
+  });
+}
+
 document.addEventListener('pointerdown', async (event) => {
   if (menu.hidden || menu.contains(event.target)) return;
   await closeMenu();

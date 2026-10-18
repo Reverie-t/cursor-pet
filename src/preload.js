@@ -6,6 +6,7 @@ contextBridge.exposeInMainWorld('pet', {
   pointerUp: (id) => ipcRenderer.send('pointer-up', id),
   setInteractive: (on) => ipcRenderer.send('interactive', on),
   resetPosition: () => ipcRenderer.send('reset-position'),
+  hide: () => ipcRenderer.send('hide'),
   setMenuSpace: (extra) => ipcRenderer.invoke('set-menu-space', extra),
   quit: () => ipcRenderer.send('quit'),
   getState: () => ipcRenderer.invoke('get-state'),

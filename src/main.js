@@ -1,4 +1,4 @@
-const { app, BrowserWindow, ipcMain, screen } = require('electron');
+const { app, BrowserWindow, ipcMain, Menu, Tray, nativeImage, screen } = require('electron');
 const { spawn, spawnSync } = require('child_process');
 const fs = require('fs');
 const path = require('path');
@@ -26,6 +26,7 @@ const HEIGHT = WINDOW.height;
 const THROW_SPEED = 700;
 
 let win = null;
+let tray = null;
 let motion = null;
 let grab = null;
 let menuExtra = 0;
@@ -235,8 +236,38 @@ async function listen(port) {
   }
 }
 
+function showPet() {
+  if (!win || win.isDestroyed()) return;
+  if (!win.isVisible()) win.showInactive();
+  if (tray) {
+    tray.destroy();
+    tray = null;
+  }
+}
+
+function hidePet() {
+  if (!win || win.isDestroyed()) return;
+  stopMotion(true);
+  win.hide();
+  if (tray) return;
+  const image = nativeImage
+    .createFromPath(path.join(PET_DIR, 'assets', 'webm', 'grok-idle.png'))
+    .resize({ width: 16, height: 16 });
+  tray = new Tray(image);
+  tray.setToolTip('桌宠藏起来了，单击把它叫出来');
+  tray.setContextMenu(Menu.buildFromTemplate([
+    { label: '显示', click: showPet },
+    { label: '退出', click: () => app.quit() },
+  ]));
+  tray.on('click', showPet);
+}
+
 app.on('second-instance', () => {
-  if (win && !win.isDestroyed()) win.showInactive();
+  showPet();
+});
+
+app.on('before-quit', () => {
+  if (tray) tray.destroy();
 });
 
 app.whenReady().then(async () => {
@@ -321,6 +352,10 @@ ipcMain.handle('set-menu-space', (_event, extra) => {
 ipcMain.on('interactive', (_event, on) => {
   if (!win || grab) return;
   win.setIgnoreMouseEvents(on !== true, { forward: true });
+});
+
+ipcMain.on('hide', () => {
+  hidePet();
 });
 
 ipcMain.on('quit', () => {
