@@ -9,15 +9,9 @@ Currently supports **Windows** only. Requires Node.js to be installed and Cursor
 ## Preview
 
 <p align="center">
-  <img src="assets/screenshots/context-menu.png" width="330" alt="Context menu: today's work time, plan balance, and a chat box" />
+  <img src="assets/screenshots/grok-preview.png" width="820" alt="Six poses: idle, thinking, coding, success, sighing, and dragging" />
   <br />
-  <sub>Context menu — today's work time, plan balance, and a one-line chat box</sub>
-</p>
-
-<p align="center">
-  <img src="assets/screenshots/drag.png" width="440" alt="Drag feedback: switches to a startled pose when picked up" />
-  <br />
-  <sub>Drag feedback — switches to a startled pose with a speech bubble when picked up</sub>
+  <sub>Six poses — idle, thinking, coding, success, sighing, and dragging</sub>
 </p>
 
 ## Getting started

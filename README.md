@@ -9,15 +9,9 @@
 ## 效果预览
 
 <p align="center">
-  <img src="assets/screenshots/context-menu.png" width="330" alt="右键菜单：今日工时、套餐余额与对话入口" />
+  <img src="assets/screenshots/grok-preview.png" width="820" alt="六种动作：待机、思考、写代码、庆祝、叹气、拖拽" />
   <br />
-  <sub>右键菜单 —— 今日工时、套餐余额，以及一句话对话入口</sub>
-</p>
-
-<p align="center">
-  <img src="assets/screenshots/drag.png" width="440" alt="拖拽反馈：被拎起时切换为惊讶姿势" />
-  <br />
-  <sub>拖拽反馈 —— 被拎起时切换为惊讶姿势，并弹出提示气泡</sub>
+  <sub>六种动作 —— 待机、思考、写代码、庆祝、叹气、拖拽</sub>
 </p>
 
 ## 运行方式
